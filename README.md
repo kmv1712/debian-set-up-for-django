@@ -67,6 +67,14 @@ make -j8 ; \
 sudo make altinstall
 ```
 
+Удалим ахив
+и распакованый архив исходников python
+
+'''
+sudo rm -rf Python-3.8.0
+rm -rf Python-3.8.0.tgz  
+'''
+
 Now python3.7 in `/home/www/.python/bin/python3.7`. Update pip:
 
 ```
