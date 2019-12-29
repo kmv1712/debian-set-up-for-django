@@ -50,6 +50,8 @@ Configure some needed aliases:
 vim ~/.zshrc
     alias cls="clear"
 ```
+Установить, как основную оболочку
+chsh -s $(which zsh)
 
 ## Install python 3.7
 
@@ -61,8 +63,8 @@ Build from source python 3.7, install with prefix to ~/.python folder:
 wget https://www.python.org/ftp/python/3.7.3/Python-3.7.3.tgz ; \
 tar xvf Python-3.7.* ; \
 cd Python-3.7.3 ; \
-mkdir ~/.python ; \
-./configure --enable-optimizations --prefix=/home/www/.python ; \
+mkdir ~/.python ; \ # Собираем python в данном файле
+./configure --enable-optimizations --prefix=/home/www/.python ; \ # Для сборки в папку .p
 make -j8 ; \
 sudo make altinstall
 ```
