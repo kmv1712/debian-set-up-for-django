@@ -123,10 +123,10 @@ sudo vim /etc/profile
 Change `postges` password, create clear database named `dbms_db`:
 
 ```
-sudo passwd postgres
-su - postgres
+sudo passwd postgres # Сменим пароль пользователя постгрес
+su - postgres  # Зайдем в постгрес
 export PATH=$PATH:/usr/lib/postgresql/11/bin
-createdb --encoding UNICODE dbms_db --username postgres
+createdb --encoding UNICODE bboard.data --username postgres
 exit
 ```
 
@@ -135,7 +135,7 @@ Create `dbms` db user and grand privileges to him:
 ```
 sudo -u postgres psql
 postgres=# ...
-create user dbms with password 'some_password';
+create user dbms with password 'AQG9bVPG';
 ALTER USER dbms CREATEDB;
 grant all privileges on database dbms_db to dbms;
 \c dbms_db
@@ -176,6 +176,7 @@ vim /home/www/code/project/bin/start_gunicorn.sh
 	source /home/www/code/project/env/bin/activate
 	source /home/www/code/project/env/bin/postactivate
 	exec gunicorn  -c "/home/www/code/project/gunicorn_config.py" project.wsgi
+	user=www
 
 chmod +x /home/www/code/project/bin/start_gunicorn.sh
 
@@ -202,3 +203,21 @@ limit_request_fields = 32000
 limit_request_field_size = 0
 raw_env = 'DJANGO_SETTINGS_MODULE=project.settings'
 ```
+
+server {
+        listen 80 default_server;
+        listen [::]:80 default_server;
+
+        root /var/www/html;
+        index index.html index.htm index.nginx-debian.html;
+
+        server_name _;
+
+        location / {
+                proxy_pass http://127.0.0.1:8001;
+                proxy_set_header X-Forwarded-Host $server_name;
+                proxy_set_header X-Real-IP $remote_addr;
+                add_header P3P 'CP="ALL DSP COR PSAa PSDa OUR NOR ONL UNI COM NAV"';
+		add_header Access-Control-Allow-Origin *;
+        }
+}
