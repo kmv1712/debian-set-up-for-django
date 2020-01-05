@@ -64,9 +64,14 @@ wget https://www.python.org/ftp/python/3.7.3/Python-3.7.3.tgz ; \
 tar xvf Python-3.7.* ; \
 cd Python-3.7.3 ; \
 mkdir ~/.python ; \ # Собираем python в данном файле
+
 ./configure --enable-optimizations --prefix=/home/www/.python ; \ # Для сборки в папку .p
+# на Евробайте вылетала ошибка после команды лечится apt-get install gcc
+
 make -j8 ; \
-sudo make altinstall
+или make -j4 # Для слабеньких компьютеров например мои проекты на серверах за 175р на Евробайте. 
+
+sudo make altinstall # НЕ ЗАБЫТЬ ВЫПОЛНИТЬ ДЛЯ УСТАНОВКИ
 ```
 
 Удалим ахив
